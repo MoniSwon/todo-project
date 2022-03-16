@@ -15,3 +15,10 @@ export async function createTodo(data) {
     const answer = await axios.post(`http://localhost:8080/api/createTodo`, data)
     return answer.data
 }
+
+export async function updateTodo(data) {
+    const id = data.id;
+    const field = 'title';
+    const value = data.title;
+    const answer = await axios.patch(`http://localhost:8080/api/updateTodo?id=${id}&field=${field}&value=${value}`)
+}

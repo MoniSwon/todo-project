@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getTodos, createTodo, deleteTodo } from "./ApiCall";
+import { getTodos, createTodo, deleteTodo, updateTodo } from "./ApiCall";
 
 
 export default function List() {
@@ -35,9 +35,15 @@ export default function List() {
     }
   };
 
-  const saveLocal = () => {
+  const editTodo = (item) => {
+    // I'll try to do a modal after the edit stuff work
+    const hey = window.prompt("Edit the title", item.title);
+    window.alert(hey)
+  }
+
+  /* const saveLocal = () => {
     localStorage.setItem("toDos", JSON.stringify(toDosArr));
-  };
+  }; */
 
   useEffect(() => {
     getTodos().then(res => {
@@ -135,18 +141,12 @@ export default function List() {
                   <td>{item.status}</td>
                   <td>{date.toLocaleDateString('fr-FR')}</td>
                   <td>
-                    <button
-                      onClick={() => {
-                        item.label === "Urgent"
-                          ? (item.label = "Non Urgent")
-                          : (item.label = "Urgent");
-                        saveLocal();
-                        setTodoUpdate(!todoUpdate);
-                      }}
-                    >
-                      {item.label === "Urgent" ? "Mettre en Non Urgent" : "Mettre en Urgent"}
-                    </button>
-
+                    <button onClick={() => {/* editTodo(item) */
+                      const hey = window.prompt("Edit the title", item.title);
+                      item.title = hey;
+                      setTodoUpdate(!todoUpdate);
+                      updateTodo(item);
+                    }}>Edit</button>
                     <button onClick={() => removeToDo(item.id)}>Remove</button>
                   </td>
                 </tr>
