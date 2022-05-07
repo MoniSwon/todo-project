@@ -24,9 +24,9 @@ export default function List() {
     };
   }
 
-  const removeToDo = (id) => {
+  const removeToDo = (idDatabase, id) => {
     if (toDosArr) {
-      deleteTodo(id).then(res => {
+      deleteTodo(idDatabase).then(res => {
       })
       const newArray = toDosArr.filter((toDo, toDoIndex) => {
         return toDoIndex !== id;
@@ -129,7 +129,7 @@ export default function List() {
           {toDosArr
             ? toDosArr.map((item, id) => {
               return (
-                <tr key={item.id}>
+                <tr key={id}>
                   <td>{item.title}</td>
                   <td>{item.user}</td>
                   <td>{item.description}</td>
@@ -144,7 +144,7 @@ export default function List() {
                       setTodoUpdate(!todoUpdate);
                       updateTodo(item);
                     }}>Edit</button>
-                    <button onClick={() => removeToDo(item.id)}>Remove</button>
+                    <button onClick={() => removeToDo(item.id, id)}>Remove</button>
                   </td>
                 </tr>
               );
