@@ -20,5 +20,5 @@ export async function updateTodo(data) {
     const id = data.id;
     const field = 'title';
     const value = data.title;
-    const answer = await axios.patch(`http://localhost:8080/api/updateTodo?id=${id}&field=${field}&value=${value}`)
+    await axios.patch(`http://localhost:8080/api/updateTodo?id=${id}&field=${field}&value=${value}`)
 }

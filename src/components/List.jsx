@@ -21,12 +21,12 @@ export default function List() {
       createTodo(newToDoParsed).then(res => {
         setToDosArr([...toDosArr, res]);
       })
-    };
+    }
   }
 
   const removeToDo = (idDatabase, id) => {
     if (toDosArr) {
-      deleteTodo(idDatabase).then(res => {
+      deleteTodo(idDatabase).then(() => {
       })
       const newArray = toDosArr.filter((toDo, toDoIndex) => {
         return toDoIndex !== id;
