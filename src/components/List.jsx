@@ -35,11 +35,7 @@ export default function List() {
     }
   };
 
-  const editTodo = (item) => {
-    // I'll try to do a modal after the edit stuff work
-    const hey = window.prompt("Edit the title", item.title);
-    window.alert(hey)
-  }
+
 
   /* const saveLocal = () => {
     localStorage.setItem("toDos", JSON.stringify(toDosArr));
@@ -109,6 +105,7 @@ export default function List() {
         <select
           id="status"
           name="status"
+          value={status}
           onChange={(e) => setStatus(e.target.value)}
         >
           <option value="Waiting">Waiting</option>
@@ -136,12 +133,12 @@ export default function List() {
                   <td>{item.title}</td>
                   <td>{item.user}</td>
                   <td>{item.description}</td>
-                  <td>{item.due_date}</td>
+                  <td>{item.due_date.substring(0,10)}</td>
                   <td>{item.label}</td>
                   <td>{item.status}</td>
                   <td>{date.toLocaleDateString('fr-FR')}</td>
                   <td>
-                    <button onClick={() => {/* editTodo(item) */
+                    <button onClick={() => {
                       const hey = window.prompt("Edit the title", item.title);
                       item.title = hey;
                       setTodoUpdate(!todoUpdate);
