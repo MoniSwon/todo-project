@@ -101,3 +101,18 @@ th {
     word-break: break-all;
   }
 }
+
+.sort-filter-table {
+  position:relative;
+  border:0;
+}
+
+.sort-filter-select {
+  position:absolute;
+  right: 0px;
+}
+
+.sort-filter-table-label {
+  position:absolute;
+  right: 120px;
+}

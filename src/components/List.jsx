@@ -54,7 +54,6 @@ export default function List() {
   const handleClose = () => {
     setShow(false);
   }
-  const handleShow = () => setShow(true);
 
   return (
     <div>
@@ -122,6 +121,20 @@ export default function List() {
         </select>
         <input id="submit" type="submit" value="ADD NEW TASK"></input>
       </form>
+      <table className="sort-filter-table">
+        <label className="sort-filter-table-label" htmlFor="sort">Sort by :</label>
+        <select className="sort-filter-select" id="sort" name="sort">
+          <option value="albums">⬆ Title </option>
+          <option value="members">⬇ Title</option>
+          <option value="members">⬆ Due on</option>
+          <option value="members">⬇ Due on</option>
+          <option value="members">⬆ User</option>
+          <option value="formed">⬇ User</option>
+        </select>
+      </table>
+      <br />
+      <br />
+
       <table>
         <tbody>
           <tr>
