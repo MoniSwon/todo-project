@@ -136,10 +136,10 @@ export default function List() {
                   <td>{item.title}</td>
                   <td>{item.user}</td>
                   <td>{item.description}</td>
-                  <td>{item.due_date.substring(0, 10)}</td>
+                  <td>{item.due_date}</td>
                   <td>{item.label}</td>
                   <td>{item.status}</td>
-                  <td>{date.toLocaleDateString('fr-FR')}</td>
+                  <td>{item.creation_date}</td>
                   <td>
                     <>
                       <Button variant="primary" onClick={handleShow}>
