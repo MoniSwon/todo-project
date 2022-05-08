@@ -3,10 +3,6 @@ import { getTodos, createTodo, deleteTodo, updateTodo } from "./ApiCall";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
-
-// Error to fix :
-// Edit button automatically edit the last to do
-
 // To do :
 // Sort due_date, creation_date, user, urgent
 // Filter only urgent task, only this user, only this status
@@ -53,12 +49,11 @@ export default function List() {
   }, []);
 
   const [show, setShow] = useState(false);
+  const [data, setData] = useState("");
 
   const handleClose = () => {
     setShow(false);
-    
   }
-  const handleShow = () => setShow(true);
 
   return (
     <div>
@@ -151,7 +146,12 @@ export default function List() {
                   <td>{item.creation_date}</td>
                   <td>
                     <>
-                      <Button variant="primary" onClick={handleShow}>
+                      <Button variant="primary" onClick={
+                        () => {
+                          setData(item);
+                          setShow(true);
+                        }
+                      }>
                         Edit
                       </Button>
                       <Modal show={show} onHide={handleClose}>
@@ -161,35 +161,35 @@ export default function List() {
                         <Modal.Body>
                           <form className="toDoForm">
                             <label htmlFor="title">Title</label>
-                            <input id="title" placeholder={item.title} type="text" onChange={(e) => item.title = e.target.value}/><br></br>
+                            <input id="title" placeholder={data.title} type="text" onChange={(e) => data.title = e.target.value} /><br></br>
                             <label htmlFor="user">user</label>
-                            <input id="user" placeholder={item.user} type="text" onChange={(e) => item.user = e.target.value}/><br></br>
+                            <input id="user" placeholder={data.user} type="text" onChange={(e) => data.user = e.target.value} /><br></br>
                             <label htmlFor="description">Description</label>
-                            <input id="description" placeholder={item.description} type="text" onChange={(e) => item.description = e.target.value}/><br></br>
+                            <input id="description" placeholder={data.description} type="text" onChange={(e) => data.description = e.target.value} /><br></br>
                             <label htmlFor="due_date">Due on</label>
-                            <input id="due_date" placeholder={item.due_date.substring(0, 10)} type="date" onChange={(e) => item.due_date = e.target.value}/><br></br>
+                            <input id="due_date" placeholder={data.due_date.substring(0, 10)} type="date" onChange={(e) => data.due_date = e.target.value} /><br></br>
                             <label htmlFor="label">Urgent</label>
-                            <select id="label" placeholder={item.label} onChange={(e) => item.label = e.target.value}>
+                            <select id="label" placeholder={data.label} onChange={(e) => data.label = e.target.value}>
                               <option value="Yes">Yes</option>
                               <option value="No">No</option>
                             </select><br></br>
                             <label htmlFor="status">Status</label>
-                            <select id="status" placeholder={item.status} onChange={(e) => item.status = e.target.value}>
+                            <select id="status" placeholder={data.status} onChange={(e) => data.status = e.target.value}>
                               <option value="Waiting">Waiting</option>
                               <option value="In Progress">In progress</option>
                               <option value="Completed">Completed</option>
                             </select><br></br>
                             <Button variant="primary" onClick={() => {
-                            setTodoUpdate(!todoUpdate);
-                            updateTodo(item);
-                            setShow(false);
-                          }}>
-                            Save Changes
-                          </Button>
+                              setTodoUpdate(!todoUpdate);
+                              updateTodo(item);
+                              setShow(false);
+                            }}>
+                              Save Changes
+                            </Button>
                           </form>
                         </Modal.Body>
                         <Modal.Footer>
-                          
+
                         </Modal.Footer>
                       </Modal>
                     </>
