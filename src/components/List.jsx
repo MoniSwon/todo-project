@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { getTodos, createTodo, deleteTodo, updateTodo } from "./ApiCall";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal, Button } from 'react-bootstrap';
 
+//still need to fix the update -> when we edit without changing one of the field, there is a problem with the date.
 
 export default function List() {
   const [title, setTitle] = useState("");
@@ -35,20 +38,20 @@ export default function List() {
     }
   };
 
-
-
-  /* const saveLocal = () => {
-    localStorage.setItem("toDos", JSON.stringify(toDosArr));
-  }; */
-
   useEffect(() => {
     getTodos().then(res => {
       setToDosArr(res)
       console.log(res)
     })
-    /* const storedToDos = localStorage.getItem("toDos");
-    if (storedToDos) setToDosArr(JSON.parse(storedToDos)); */
   }, []);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => {
+    setShow(false);
+    
+  }
+  const handleShow = () => setShow(true);
 
   return (
     <div>
@@ -120,7 +123,7 @@ export default function List() {
             <th>To Do</th>
             <th>For</th>
             <th>Description</th>
-            <th>Due on Date</th>
+            <th>Due on</th>
             <th>Urgent</th>
             <th>Status</th>
             <th>Creation Date</th>
@@ -133,18 +136,56 @@ export default function List() {
                   <td>{item.title}</td>
                   <td>{item.user}</td>
                   <td>{item.description}</td>
-                  <td>{item.due_date.substring(0,10)}</td>
+                  <td>{item.due_date.substring(0, 10)}</td>
                   <td>{item.label}</td>
                   <td>{item.status}</td>
                   <td>{date.toLocaleDateString('fr-FR')}</td>
                   <td>
-                    <button onClick={() => {
-                      const hey = window.prompt("Edit the title", item.title);
-                      item.title = hey;
-                      setTodoUpdate(!todoUpdate);
-                      updateTodo(item);
-                    }}>Edit</button>
-                    <button onClick={() => removeToDo(item.id, id)}>Remove</button>
+                    <>
+                      <Button variant="primary" onClick={handleShow}>
+                        Edit
+                      </Button>
+
+                      <Modal show={show} onHide={handleClose}>
+                        <Modal.Header closeButton>
+                          <Modal.Title>Edit your todo :</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                          <form className="toDoForm">
+                            <label htmlFor="title">Title</label>
+                            <input id="title" placeholder={item.title} type="text" onChange={(e) => item.title = e.target.value}/><br></br>
+                            <label htmlFor="user">user</label>
+                            <input id="user" placeholder={item.user} type="text" onChange={(e) => item.user = e.target.value}/><br></br>
+                            <label htmlFor="description">Description</label>
+                            <input id="description" placeholder={item.description} type="text" onChange={(e) => item.description = e.target.value}/><br></br>
+                            <label htmlFor="due_date">Due on</label>
+                            <input id="due_date" placeholder={item.due_date.substring(0, 10)} type="date" onChange={(e) => item.due_date = e.target.value}/><br></br>
+                            <label htmlFor="label">Urgent</label>
+                            <select id="label" placeholder={item.label} onChange={(e) => item.label = e.target.value}>
+                              <option value="Yes">Yes</option>
+                              <option value="No">No</option>
+                            </select><br></br>
+                            <label htmlFor="status">Status</label>
+                            <select id="status" placeholder={item.status} onChange={(e) => item.status = e.target.value}>
+                              <option value="Waiting">Waiting</option>
+                              <option value="In Progress">In progress</option>
+                              <option value="Completed">Completed</option>
+                            </select><br></br>
+                            <Button variant="primary" onClick={() => {
+                            setTodoUpdate(!todoUpdate);
+                            updateTodo(item);
+                            setShow(false);
+                          }}>
+                            Save Changes
+                          </Button>
+                          </form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                          
+                        </Modal.Footer>
+                      </Modal>
+                    </>
+                    <Button onClick={() => removeToDo(item.id, id)}>Remove</Button>
                   </td>
                 </tr>
               );
@@ -152,6 +193,7 @@ export default function List() {
             : null}
         </tbody>
       </table>
+
     </div>
   );
 }

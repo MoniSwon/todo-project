@@ -18,7 +18,12 @@ export async function createTodo(data) {
 
 export async function updateTodo(data) {
     const id = data.id;
-    const field = 'title';
-    const value = data.title;
-    await axios.patch(`http://localhost:8080/api/updateTodo?id=${id}&field=${field}&value=${value}`)
+    const title = data.title;
+    const user = data.user;
+    const description = data.description;
+    const due_date = data.due_date;
+    const status = data.status;
+    const label = data.label;
+    await axios.patch(`http://localhost:8080/api/updateTodo?id=${id}&title=${title}&user=${user}&description=${description}&due_date=${due_date}&status=${status}&label=${label}`)
+
 }
