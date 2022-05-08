@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
 // To do :
-// Sort due_date, creation_date, user, urgent
-// Filter only urgent task, only this user, only this status
+// Sort due_date, title, user
+// Filter urgent task
 // When a task is completed, transfer it into a new gray table
 // Create a READ ME
 
@@ -121,16 +121,23 @@ export default function List() {
         </select>
         <input id="submit" type="submit" value="ADD NEW TASK"></input>
       </form>
+
       <table className="sort-filter-table">
+        
         <label className="sort-filter-table-label" htmlFor="sort">Sort by :</label>
         <select className="sort-filter-select" id="sort" name="sort">
-          <option value="albums">⬆ Title </option>
-          <option value="members">⬇ Title</option>
-          <option value="members">⬆ Due on</option>
-          <option value="members">⬇ Due on</option>
-          <option value="members">⬆ User</option>
-          <option value="formed">⬇ User</option>
+          <option value="title-asc">⬆ Title </option>
+          <option value="title-desc">⬇ Title</option>
+          <option value="due-date-asc">⬆ Due on</option>
+          <option value="due-date-desc">⬇ Due on</option>
+          <option value="user-asc">⬆ User</option>
+          <option value="user-desc">⬇ User</option>
         </select>
+        <br/>
+        <label className="sort-filter-table-label">Urgent :</label>
+        <input type="checkbox" className="sort-filter-checkbox"/>
+        <label className="sort-filter-table-label">Urgent :</label>
+        <input type="checkbox" className="sort-filter-checkbox"/>
       </table>
       <br />
       <br />
