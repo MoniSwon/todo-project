@@ -3,7 +3,15 @@ import { getTodos, createTodo, deleteTodo, updateTodo } from "./ApiCall";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Modal, Button } from 'react-bootstrap';
 
-//still need to fix the update -> when we edit without changing one of the field, there is a problem with the date.
+
+// Error to fix :
+// Edit button automatically edit the last to do
+
+// To do :
+// Sort due_date, creation_date, user, urgent
+// Filter only urgent task, only this user, only this status
+// When a task is completed, transfer it into a new gray table
+// Create a READ ME
 
 export default function List() {
   const [title, setTitle] = useState("");
@@ -13,8 +21,7 @@ export default function List() {
   const [toDosArr, setToDosArr] = useState([]);
   const [todoUpdate, setTodoUpdate] = useState(false);
   const [dueDate, setDueDate] = useState("");
-  const [status, setStatus] = useState("");
-  const date = new Date();
+  const [status, setStatus] = useState("Waiting");
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -100,6 +107,7 @@ export default function List() {
           name="urgent"
           value={urgent}
           onChange={(e) => setUrgent(e.target.value)}
+          required
         >
           <option value="Yes">Yes</option>
           <option value="No">No</option>
@@ -110,6 +118,7 @@ export default function List() {
           name="status"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
+          required
         >
           <option value="Waiting">Waiting</option>
           <option value="In Progress">In progress</option>
@@ -145,7 +154,6 @@ export default function List() {
                       <Button variant="primary" onClick={handleShow}>
                         Edit
                       </Button>
-
                       <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                           <Modal.Title>Edit your todo :</Modal.Title>
