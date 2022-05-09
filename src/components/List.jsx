@@ -8,9 +8,6 @@ import { Modal, Button } from 'react-bootstrap';
 // When a task is completed, transfer it into a new gray table
 // Create a READ ME
 
-//To fix :
-// Edit the status is not working
-
 export default function List() {
   const [title, setTitle] = useState("");
   const [user, setUser] = useState("");
@@ -53,6 +50,10 @@ export default function List() {
   const [show, setShow] = useState(false);
   const [data, setData] = useState("");
 
+  function setValue(data) {
+    return (data.status == 'Waiting' || data.status == 'Completed' ? "In progress" : (data.status == "Waiting" || data.status == "In progress" ? "Completed" : "Waiting"))
+  }
+
   const handleClose = () => {
     setShow(false);
   }
@@ -63,7 +64,7 @@ export default function List() {
 
   const handleOnChange = () => {
     (!checked) ? setChecked(true) : setChecked(false);
-    if(checked) {
+    if (checked) {
       setToDosArr(toDosArr.filter(id => id.label == 'Yes'))
     } else {
       getTodos().then(res => {
@@ -78,6 +79,7 @@ export default function List() {
   function sortTheTable(value) {
     console.log(value)
   }
+
 
   return (
     <div>
@@ -147,7 +149,7 @@ export default function List() {
       </form>
 
       <table className="sort-filter-table">
-        
+
         <label className="sort-filter-table-label" htmlFor="sort">Sort by :</label>
         <select className="sort-filter-select" id="sorting" name="sorting" onChange={() => sortTheTable(sorting.value)}>
           <option value="id-asc">⬆ Creation Date</option>
@@ -159,9 +161,9 @@ export default function List() {
           <option value="user-asc">⬆ User</option>
           <option value="user-desc">⬇ User</option>
         </select>
-        <br/>
+        <br />
         <label className="sort-filter-table-label" for="checkbox" >Urgent :</label>
-        <input type="checkbox" onChange={handleOnChange} className="sort-filter-checkbox"/>
+        <input type="checkbox" onChange={handleOnChange} className="sort-filter-checkbox" />
       </table>
       <br />
       <br />
@@ -220,9 +222,9 @@ export default function List() {
                             </select><br></br>
                             <label htmlFor="status">Status</label>
                             <select id="status" placeholder={data.status} onChange={(e) => data.status = e.target.value}>
-                              <option value="Waiting">Waiting</option>
-                              <option value="In Progress">In progress</option>
-                              <option value="Completed">Completed</option>
+                              <option value={data.status}>{data.status}</option>
+                              <option value={setValue(data)}>{setValue(data)}</option>
+                              <option value={setValue(data) == "Completed" && data.status == "In progress" ? "Waiting" : (setValue(data) == "Completed" && data.status == "Waiting" ? "In progress" : (setValue(data) == "In progress" && data.status == "Waiting" ? "Completed" : (setValue(data) == "In progress" && data.status == "Completed" ? "Waiting" : (setValue(data) == "Waiting" && data.status == "Completed" ? "In progress" : (setValue(data) == "Waiting" && data.status == "In progress" ? "Completed" : "C'est plus l'heure pour l'algo")))))}>{setValue(data) == "Completed" && data.status == "In progress" ? "Waiting" : (setValue(data) == "Completed" && data.status == "Waiting" ? "In progress" : (setValue(data) == "In progress" && data.status == "Waiting" ? "Completed" : (setValue(data) == "In progress" && data.status == "Completed" ? "Waiting" : (setValue(data) == "Waiting" && data.status == "Completed" ? "In progress" : (setValue(data) == "Waiting" && data.status == "In progress" ? "Completed" : "C'est plus l'heure pour l'algo")))))}</option>
                             </select><br></br>
                             <Button variant="primary" onClick={() => {
                               setTodoUpdate(!todoUpdate);
