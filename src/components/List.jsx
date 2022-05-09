@@ -5,7 +5,6 @@ import { Modal, Button } from 'react-bootstrap';
 
 // To do :
 // Sort due_date, title, user
-// Filter urgent task
 // When a task is completed, transfer it into a new gray table
 // Create a READ ME
 
@@ -44,7 +43,6 @@ export default function List() {
   useEffect(() => {
     getTodos().then(res => {
       setToDosArr(res)
-      console.log(res)
     })
   }, []);
 
@@ -53,6 +51,19 @@ export default function List() {
 
   const handleClose = () => {
     setShow(false);
+  }
+
+  const [checked, setChecked] = useState(true);
+
+  const handleOnChange = () => {
+    (!checked) ? setChecked(true) : setChecked(false);
+    if(checked) {
+      setToDosArr(toDosArr.filter(id => id.label == 'Yes'))
+    } else {
+      getTodos().then(res => {
+        setToDosArr(res)
+      })
+    }
   }
 
   return (
@@ -134,10 +145,8 @@ export default function List() {
           <option value="user-desc">⬇ User</option>
         </select>
         <br/>
-        <label className="sort-filter-table-label">Urgent :</label>
-        <input type="checkbox" className="sort-filter-checkbox"/>
-        <label className="sort-filter-table-label">Urgent :</label>
-        <input type="checkbox" className="sort-filter-checkbox"/>
+        <label className="sort-filter-table-label" for="checkbox" >Urgent :</label>
+        <input type="checkbox" onChange={handleOnChange} className="sort-filter-checkbox"/>
       </table>
       <br />
       <br />
@@ -171,7 +180,6 @@ export default function List() {
                         () => {
                           setData(item);
                           setShow(true);
-                          console.log(data.title);
                         }
                       }>
                         Edit
