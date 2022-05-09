@@ -19,10 +19,8 @@ If you want to edit a todo, you will have an "Edit" button that will show you a 
 
 You can also remove a todo with the button "Remove".
 
-* There are 2 non-functional things in my project.
+* There is 1 non-functional thing in my project.
 
-The first one is the Sort selection.
+It's the Sort selection.
 
-The second one is a filter button that permits us to see only urgent task(s).
-
-Why are they non-functionnal ? Because I'm a bad student making her homework the last day.
+Why is it non-functionnal ? Because I'm a bad student making her homework the last day.
