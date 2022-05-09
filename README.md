@@ -21,6 +21,10 @@ You can also remove a todo with the button "Remove".
 
 * There is 1 non-functional thing in my project.
 
-It's the Sort selection.
+It's the Sort selection. *I'm just starting it. Will I finish it ?*
 
 Why is it non-functionnal ? Because I'm a bad student making her homework the last day.
+
+* There is one problem I noticed later :
+
+The Status is not edited when we try to edit it

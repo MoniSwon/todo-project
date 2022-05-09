@@ -8,6 +8,9 @@ import { Modal, Button } from 'react-bootstrap';
 // When a task is completed, transfer it into a new gray table
 // Create a READ ME
 
+//To fix :
+// Edit the status is not working
+
 export default function List() {
   const [title, setTitle] = useState("");
   const [user, setUser] = useState("");
@@ -46,12 +49,15 @@ export default function List() {
     })
   }, []);
 
+  // Edit todos
   const [show, setShow] = useState(false);
   const [data, setData] = useState("");
 
   const handleClose = () => {
     setShow(false);
   }
+
+  // Filter urgent todos
 
   const [checked, setChecked] = useState(true);
 
@@ -64,6 +70,13 @@ export default function List() {
         setToDosArr(res)
       })
     }
+  }
+
+  // Sort by...
+  const [sort, setSort] = useState("id-asc");
+
+  function sortTheTable(value) {
+    console.log(value)
   }
 
   return (
@@ -136,7 +149,9 @@ export default function List() {
       <table className="sort-filter-table">
         
         <label className="sort-filter-table-label" htmlFor="sort">Sort by :</label>
-        <select className="sort-filter-select" id="sort" name="sort">
+        <select className="sort-filter-select" id="sorting" name="sorting" onChange={() => sortTheTable(sorting.value)}>
+          <option value="id-asc">⬆ Creation Date</option>
+          <option value="id-desc">⬇ Creation Date</option>
           <option value="title-asc">⬆ Title </option>
           <option value="title-desc">⬇ Title</option>
           <option value="due-date-asc">⬆ Due on</option>
@@ -200,8 +215,8 @@ export default function List() {
                             <input id="due_date" placeholder={data.due_date} type="date" onChange={(e) => data.due_date = e.target.value} /><br></br>
                             <label htmlFor="label">Urgent</label>
                             <select id="label" placeholder={data.label} onChange={(e) => data.label = e.target.value}>
-                              <option value="Yes">Yes</option>
-                              <option value="No">No</option>
+                              <option value={data.label}>{data.label}</option>
+                              <option value={data.label == 'No' ? "Yes" : "No"}>{data.label == 'No' ? "Yes" : "No"}</option>
                             </select><br></br>
                             <label htmlFor="status">Status</label>
                             <select id="status" placeholder={data.status} onChange={(e) => data.status = e.target.value}>
